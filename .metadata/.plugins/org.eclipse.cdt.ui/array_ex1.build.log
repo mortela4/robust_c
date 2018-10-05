@@ -1,0 +1,5 @@
+14:59:18 **** Clean-only build of configuration Debug for project array_ex1 ****
+rm -rf src/coeffs.d src/array_ex1.o src/coeffs.o array_ex1.exe src/array_ex1.d 
+
+14:59:18 Build Finished (took 495ms)
+

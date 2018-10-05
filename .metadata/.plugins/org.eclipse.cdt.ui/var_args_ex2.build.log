@@ -1,0 +1,5 @@
+14:59:21 **** Clean-only build of configuration Debug for project var_args_ex2 ****
+rm -rf var_args_ex2.exe src/var_args_ex2.o src/var_args_ex2.d 
+
+14:59:21 Build Finished (took 186ms)
+

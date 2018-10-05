@@ -1,0 +1,5 @@
+14:59:22 **** Clean-only build of configuration Debug for project var_args_ex5_cpp ****
+rm -rf src/var_args_ex5_cpp.o var_args_ex5_cpp.exe src/var_args_ex5_cpp.d 
+
+14:59:22 Build Finished (took 189ms)
+

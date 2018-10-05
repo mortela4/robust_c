@@ -1,0 +1,5 @@
+14:59:19 **** Clean-only build of configuration Debug for project array_ex3 ****
+rm -rf array_ex3.exe src/lut_coeffs.d src/array_ex3.d src/array_ex3.o src/lut_coeffs.o 
+
+14:59:19 Build Finished (took 183ms)
+

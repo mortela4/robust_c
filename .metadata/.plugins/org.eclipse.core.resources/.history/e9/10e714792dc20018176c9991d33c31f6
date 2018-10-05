@@ -1,0 +1,76 @@
+#include "memaccess_wrapper.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+//
+
+
+/* Top-level helpers */
+bool WriteMem(void *val, size_t varSize, void *mem)
+{
+	bool status = true;
+	int rem = (mem_addr_t)mem % varSize;
+
+	if (rem != 0)
+	{
+		printf("Fail - size mismatch - cannot WRITE atomic!\n");
+		printf("variable size = %d-bits, memory address is %d-bit aligned.\n\n", (int)varSize*8, (int)rem*8);
+		status = false;
+	}
+	else
+	{
+		printf("WRITE-size OK ...\n");
+
+		switch (varSize)
+		{
+		case 1: WriteMem8((uint8_t *)val, (mem8_t *)mem); break;
+		case 2: WriteMem16((uint16_t *)val, (mem16_t *)mem); break;
+		case 4: WriteMem32((uint32_t *)val, (mem32_t *)mem); break;
+		default: printf("Write ERROR - only 8/16/32-bit access supported!\n"); status = false; break;
+		}
+	}
+
+	return status;
+}
+
+bool ReadMem(void *val, size_t varSize, void *mem)
+{
+	bool status = true;
+	int rem = (mem_addr_t)mem % varSize;
+
+	if (rem != 0)
+	{
+		printf("Fail - size mismatch - cannot READ atomic!\n");
+		printf("variable size = %d-bits, memory address is %d-bit aligned.\n\n", (int)varSize*8, (int)rem*8);
+		status = false;
+	}
+	else
+	{
+		printf("OK to READ ...\n");
+
+		switch (varSize)
+		{
+		case 1: ReadMem8((uint8_t *)val, (mem8_t *)mem); break;
+		case 2: ReadMem16((uint16_t *)val, (mem16_t *)mem); break;
+		case 4: ReadMem32((uint32_t *)val, (mem32_t *)mem); break;
+		default: printf("Read ERROR - only 8/16/32-bit access supported!\n\n"); status = false; break;
+		}
+	}
+
+	return status;
+}
+
+void MemInfo(void *mem, size_t memSize)
+{
+	printf("memSize = %d bytes\n", (int)memSize);
+	switch (memSize)
+		{
+		case 1: MemInfo8((mem8_t *)mem); break;
+		case 2: MemInfo16((mem16_t *)mem); break;
+		case 4: MemInfo32((mem32_t *)mem); break;
+		default: printf("Read ERROR - only 8/16/32-bit memisters supported!\n"); break;
+		}
+	printf("\n\n");
+}
+
+

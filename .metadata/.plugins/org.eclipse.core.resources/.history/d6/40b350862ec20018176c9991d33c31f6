@@ -1,0 +1,22 @@
+#ifndef MEMACCESS_WRAPPER_H_
+#define MEMACCESS_WRAPPER_H_
+
+#include <inttypes.h>
+#include <stdbool.h>
+//
+
+#include "memaccess.h"
+
+
+/* Crazy macros ... */
+#define WRITE_MEM(x,y) 	WriteMem((void *)&x, sizeof(x), (void *)&y)
+#define READ_MEM(x,y)   ReadMem((void *)&x, sizeof(x), (void *)&y)
+#define MEM_INFO(y)     MemInfo((void *)&y, (sizeof(y.memVal)))
+
+
+bool WriteMem(void *val, size_t varSize, void *mem);
+bool ReadMem(void *val, size_t varSize, void *mem);
+void MemInfo(void *mem, size_t memSize);
+
+
+#endif /* MEMACCESS_WRAPPER_H_ */

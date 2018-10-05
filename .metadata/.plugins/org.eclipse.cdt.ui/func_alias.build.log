@@ -1,0 +1,5 @@
+14:59:19 **** Clean-only build of configuration Debug for project func_alias ****
+rm -rf src/func_alias.d src/func_alias.o func_alias.exe 
+
+14:59:19 Build Finished (took 172ms)
+

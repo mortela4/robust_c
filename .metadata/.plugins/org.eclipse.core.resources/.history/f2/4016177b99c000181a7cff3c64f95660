@@ -1,0 +1,99 @@
+typedef uint32_t reg_addr_t;
+typedef struct
+{
+	uint8_t regVal;
+	reg_addr_t regAddr;
+	bool readOnly;
+} reg8_t;
+typedef struct
+{
+	uint16_t regVal;
+	reg_addr_t regAddr;
+	bool readOnly;
+} reg16_t;
+typedef struct
+{
+	uint32_t regVal;
+	reg_addr_t regAddr;
+	bool readOnly;
+} reg32_t;
+
+
+/* Low-level helpers */
+void WriteReg8(uint8_t *val, reg8_t *reg)
+{
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+}
+void ReadReg8(uint8_t *var, reg8_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo8(reg8_t *reg)
+{
+	printf("Register INFO:\n");
+	printf("==============\n");
+	printf("Register address: 0x%08X\n", reg->regAddr);
+	printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable");
+	printf("Register is 8-bit register\n");
+	printf("Register value: 0x%02X\n", reg->regVal);
+}
+
+
+void WriteReg16(uint16_t *val, reg16_t *reg)
+{
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is RWADONLY - cannot WRITE!\n\n");
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+}
+void ReadReg16(uint16_t *var, reg16_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo16(reg16_t *reg)
+{
+	printf("Register INFO:\n");
+	printf("==============\n");
+	printf("Register address: 0x%08X\n", reg->regAddr);
+	printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable");
+	printf("Register is 16-bit register\n");
+	printf("Register value: 0x%04X\n", reg->regVal);
+}
+
+
+void WriteReg32(uint32_t *val, reg32_t *reg)
+{
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is RWADONLY - cannot WRITE!\n\n");
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+}
+void ReadReg32(uint32_t *var, reg32_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo32(reg32_t *reg)
+{
+	printf("Register INFO:\n");
+	printf("==============\n");
+	printf("Register address: 0x%08X\n", reg->regAddr);
+	printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable");
+	printf("Register is 32-bit register\n");
+	printf("Register value: 0x%08X\n", reg->regVal);
+}
+

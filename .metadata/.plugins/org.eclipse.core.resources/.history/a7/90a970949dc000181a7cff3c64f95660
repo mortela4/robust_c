@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+//
+#include "regs.h"
+
+
+/* Low-level helpers */
+bool WriteReg8(uint8_t *val, reg8_t *reg)
+{
+	bool status = true;
+
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+		status = false;
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+
+	return status;
+}
+void ReadReg8(uint8_t *var, reg8_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo8(reg8_t *reg)
+{
+	printf("Register INFO:\n");
+	printf("==============\n");
+	printf("Register address: 0x%08X\n", reg->regAddr);
+	printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable");
+	printf("Register is %d-bit register\n", sizeof(reg->regVal)*8);
+	printf("Register value: 0x%02X\n", reg->regVal);
+}
+
+
+bool WriteReg16(uint16_t *val, reg16_t *reg)
+{
+	bool status = true;
+
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+		status = false;
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+
+	return status;
+}
+void ReadReg16(uint16_t *var, reg16_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo16(reg16_t *reg)
+{
+	printf("Register INFO:\n");
+	printf("==============\n");
+	printf("Register address: 0x%08X\n", reg->regAddr);
+	printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable");
+	printf("Register is %d-bit register\n", (int)sizeof(reg->regVal)*8);
+	printf("Register value: 0x%04X\n", reg->regVal);
+}
+
+
+bool WriteReg32(uint32_t *val, reg32_t *reg)
+{
+	bool status = true;
+
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+		status = false;
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+
+	return status;
+}
+void ReadReg32(uint32_t *var, reg32_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo32(reg32_t *reg)
+{
+	printf("Register INFO:\n");
+	printf("==============\n");
+	printf("Register address: 0x%08X\n", reg->regAddr);
+	printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable");
+	printf("Register is 32-bit register\n");
+	printf("Register value: 0x%08X\n", reg->regVal);
+}
+

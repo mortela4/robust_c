@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;var_args_ex5_cpp/src/var_args_ex4_cpp.cpp&apos; to &apos;var_args_ex5_cpp.cpp&apos;" description="Rename resource &apos;var_args_ex4_cpp.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/var_args_ex4_cpp.cpp" name="var_args_ex5_cpp.cpp" stamp="1536587461470" updateReferences="true"/>
+</session>

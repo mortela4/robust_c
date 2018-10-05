@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;var_args_ex3/src/var_args_ex2.c&apos; to &apos;var_args_ex3.c&apos;" description="Rename resource &apos;var_args_ex2.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/var_args_ex2.c" name="var_args_ex3.c" stamp="1536563860083" updateReferences="true"/>
+</session>

@@ -1,0 +1,98 @@
+#include "memaccess.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+//
+
+
+/* Handy macros */
+#define PRINT_MEM_INFO(x,y,z)	{ \
+								printf("MEM-ADDR INFO:\n"); \
+								printf("==============\n"); \
+								printf("Memory address: 0x%08X\n", reg->regAddr); \
+								printf("Memory value: 0x%0" #y "X\n", reg->regVal); \
+							}
+// Shortcuts:
+#define PRINT_MEM_INFO_8	PRINT_MEM_INFO(8,2)
+#define PRINT_MEM_INFO_16	PRINT_MEM_INFO(16,4)
+#define PRINT_MEM_INFO_32	PRINT_MEM_INFO(32,8)
+
+
+/* Low-level helpers */
+void WriteMem8(uint8_t *val, reg8_t *reg)
+{
+	bool status = true;
+
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+		status = false;
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+
+	return status;
+}
+void ReadMem8(uint8_t *var, reg8_t *reg)
+{
+	*var = reg->regVal;
+}
+void MemInfo8(reg8_t *reg)
+{
+	PRINT_MEM_INFO_8;
+}
+
+
+bool WriteMem16(uint16_t *val, reg16_t *reg)
+{
+	bool status = true;
+
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+		status = false;
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+
+	return status;
+}
+void ReadMem16(uint16_t *var, reg16_t *reg)
+{
+	*var = reg->regVal;
+}
+void MemInfo16(reg16_t *reg)
+{
+	PRINT_MEM_INFO_16;
+}
+
+
+bool WriteMem32(uint32_t *val, reg32_t *reg)
+{
+	bool status = true;
+
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+		status = false;
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+
+	return status;
+}
+void ReadMem32(uint32_t *var, reg32_t *reg)
+{
+	*var = reg->regVal;
+}
+void MemInfo32(reg32_t *reg)
+{
+	PRINT_MEM_INFO_32;
+}
+

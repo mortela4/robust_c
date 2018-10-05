@@ -1,0 +1,77 @@
+/*
+ ============================================================================
+ Name        : bit_manip_ex1.c
+ Author      : ml
+ Version     :
+ Copyright   : 
+ Description : Hello World in C, Ansi-style
+ ============================================================================
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+
+float read_ds18b20(const uint8_t data[8])
+{
+	bool type_s = true;
+	int16_t high = data[1] & 0x00ff;                    // Enklere: high = *(int16_t *)data; // Forutsetter at array er word(32-bit)-aligned! (else, HardFault ...)
+	int16_t raw = (int16_t)(high << 8) | data[0];
+
+	if (type_s)
+	{
+		raw = raw << 3; // 9 bit resolution default
+		if (data[7] == 0x10)
+		{
+			// "count remain" gives full 12 bit resolution
+			raw = (int16_t)((raw & 0xFFF0) + 12 - data[6]);     // Mixed-sign arithmetics = bad ...
+		}
+	}
+	else
+	{
+		uint8_t cfg = (data[4] & 0x60);
+		// at lower res, the low bits are undefined, so let's zero them
+		if (cfg == 0x00)
+			 raw = raw & ~7;  // 9 bit resolution, 93.75 ms
+		else if (cfg == 0x20)
+			 raw = raw & ~3; // 10 bit res, 187.5 ms
+		else if (cfg == 0x40)
+			raw = raw & ~1; // 11 bit res, 375 ms
+		//// default is 12 bit resolution, 750 ms conversion time   <-- så ... hvorfor er ikke dette i egen ELSE-clause her??
+	}
+	float celsius = (float)(((float)raw) / 16.0);
+
+	return celsius;
+}
+
+
+/************************************ TESTING ********************************/
+
+/*
+Examples for data[1:0]
+======================
+07D0 hex = +125C
+0191 hex = +25.0625C
+0008 hex = +0.5C
+0000 hex = 0C
+FFF8 hex = -0.5C
+FE6F hex = -25.0625C
+ */
+int main(void)
+{
+	const uint8_t tstData1_A[8] = {0xD0, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10};
+	const uint8_t tstData1_B[8] = {0xD0, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+	float tst = read_ds18b20(tstData1_A);
+
+	printf("%.4f\n", tst);
+
+	tst = read_ds18b20(tstData1_B);
+
+	printf("%.4f\n", tst);
+
+
+	return EXIT_SUCCESS;
+}

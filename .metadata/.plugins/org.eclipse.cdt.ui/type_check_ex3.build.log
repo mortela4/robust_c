@@ -1,0 +1,5 @@
+14:59:21 **** Clean-only build of configuration Debug for project type_check_ex3 ****
+rm -rf src/type_check_ex3.o type_check_ex3.exe src/type_check_ex3.d 
+
+14:59:21 Build Finished (took 178ms)
+

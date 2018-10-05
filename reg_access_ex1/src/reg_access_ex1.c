@@ -1,0 +1,232 @@
+/*
+ ============================================================================
+ Name        : reg_access_ex1.c
+ Author      : ml
+ Version     :
+ Copyright   : 
+ Description : Hello World in C, Ansi-style
+ ============================================================================
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+//
+#include <inttypes.h>
+#include <stdbool.h>
+
+
+
+typedef uint32_t reg_addr_t;
+typedef struct
+{
+	uint8_t regVal;
+	reg_addr_t regAddr;
+	bool readOnly;
+} reg8_t;
+typedef struct
+{
+	uint16_t regVal;
+	reg_addr_t regAddr;
+	bool readOnly;
+} reg16_t;
+typedef struct
+{
+	uint32_t regVal;
+	reg_addr_t regAddr;
+	bool readOnly;
+} reg32_t;
+
+
+/* Low-level helpers */
+void WriteReg8(uint8_t *val, reg8_t *reg)
+{
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+}
+void ReadReg8(uint8_t *var, reg8_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo8(reg8_t *reg)
+{
+	printf("Register INFO:\n");
+	printf("==============\n");
+	printf("Register address: 0x%08X\n", reg->regAddr);
+	printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable");
+	printf("Register is 8-bit register\n");
+	printf("Register value: 0x%02X\n", reg->regVal);
+}
+
+
+void WriteReg16(uint16_t *val, reg16_t *reg)
+{
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is RWADONLY - cannot WRITE!\n\n");
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+}
+void ReadReg16(uint16_t *var, reg16_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo16(reg16_t *reg)
+{
+	printf("Register INFO:\n");
+	printf("==============\n");
+	printf("Register address: 0x%08X\n", reg->regAddr);
+	printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable");
+	printf("Register is 16-bit register\n");
+	printf("Register value: 0x%04X\n", reg->regVal);
+}
+
+
+void WriteReg32(uint32_t *val, reg32_t *reg)
+{
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is RWADONLY - cannot WRITE!\n\n");
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+}
+void ReadReg32(uint32_t *var, reg32_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo32(reg32_t *reg)
+{
+	printf("Register INFO:\n");
+	printf("==============\n");
+	printf("Register address: 0x%08X\n", reg->regAddr);
+	printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable");
+	printf("Register is 32-bit register\n");
+	printf("Register value: 0x%08X\n", reg->regVal);
+}
+
+
+/* Top-level helpers */
+bool WriteReg(void *val, size_t varSize, void *reg, size_t regSize)
+{
+	if (regSize != varSize)
+	{
+		printf("Fail - size mismatch - cannot WRITE!\n");
+		printf("variable size = %d-bits, register size = %d-bits\n\n", (int)varSize*8, (int)regSize*8);
+
+		return false;
+	}
+	else
+	{
+		printf("OK to WRITE ...\n");
+
+		switch (regSize)
+		{
+		case 1: WriteReg8((uint8_t *)val, (reg8_t *)reg); break;
+		case 2: WriteReg16((uint16_t *)val, (reg16_t *)reg); break;
+		case 4: WriteReg32((uint32_t *)val, (reg32_t *)reg); break;
+		default: printf("Write ERROR - only 8/16/32-bit registers supported!\n"); break;
+		}
+
+		return true;
+	}
+}
+
+bool ReadReg(void *val, size_t varSize, void *reg, size_t regSize)
+{
+	if (regSize != varSize)
+	{
+		printf("Fail - size mismatch - cannot READ!\n");
+		printf("variable size = %d-bits, register size = %d-bits\n\n", (int)varSize*8, (int)regSize*8);
+
+		return false;
+	}
+	else
+	{
+		printf("OK to READ ...\n");
+
+		switch (regSize)
+		{
+		case 1: ReadReg8((uint8_t *)val, (reg8_t *)reg); break;
+		case 2: ReadReg16((uint16_t *)val, (reg16_t *)reg); break;
+		case 4: ReadReg32((uint32_t *)val, (reg32_t *)reg); break;
+		default: printf("Read ERROR - only 8/16/32-bit registers supported!\n\n"); break;
+		}
+
+		return true;
+	}
+}
+
+void RegInfo(void *reg, size_t regSize)
+{
+	printf("regSize = %d bytes\n", (int)regSize);
+	switch (regSize)
+		{
+		case 1: RegInfo8((reg8_t *)reg); break;
+		case 2: RegInfo16((reg16_t *)reg); break;
+		case 4: RegInfo32((reg32_t *)reg); break;
+		default: printf("Read ERROR - only 8/16/32-bit registers supported!\n"); break;
+		}
+	printf("\n\n");
+}
+
+/* Crazy macros ... */
+#define WRITE_REG(x,y) 	WriteReg((void *)&x, sizeof(x), (void *)&y, (sizeof(y.regVal)))
+#define READ_REG(x,y)   ReadReg((void *)&x, sizeof(x), (void *)&y, (sizeof(y.regVal)))
+#define REG_INFO(y)     RegInfo((void *)&y, (sizeof(y.regVal)))
+
+
+/******************************************** TESTING ... **********************************/
+
+/* Actual registers */
+reg32_t controlReg = { 0, 0xFFFFFFF0, false};
+reg16_t statusReg = {0, 0xFFFFFFF8, true};
+reg8_t dataReg = {0, 0xFFFFFFFC, false};
+
+
+int main(void)
+{
+	uint8_t tst8 = 0x52;
+	uint16_t tst16 = 0xACDC;
+	uint32_t tst32 = 0xDEADBEEF;
+
+	/* Checks: */
+	REG_INFO(controlReg);
+	REG_INFO(statusReg);
+	REG_INFO(dataReg);
+
+	/* Positive test */
+	WRITE_REG(tst32, controlReg);
+	printf("ControlReg-value is now = 0x%08X\n\n", controlReg.regVal);
+	controlReg.regVal = 0xABCDEF77;  // Cheating - writes directly to register ...
+	READ_REG(tst32, controlReg);
+	printf("tst32-value is now = 0x%08X\n\n", tst32);
+
+	/* Negative test */
+	WRITE_REG(tst8, statusReg);
+	printf("statusReg-value is now = 0x%04X\n\n", statusReg.regVal);  // unchanged ...
+	statusReg.regVal = 0x1234;  // Cheating - writes directly to register (which actually is READONLY) ...
+	READ_REG(tst8, statusReg);
+
+	/* Positive again ... */
+	READ_REG(tst16, statusReg);
+	printf("tst16-value is now = 0x%04X\n\n", tst16);
+	printf("... and statusReg-value is also = 0x%04X\n\n", statusReg.regVal);
+
+	/* Negative - on READONLY condition ... */
+	tst16 = 0xDCAC;
+	WRITE_REG(tst16, statusReg);
+	printf("statusReg-value is still = 0x%04X\n\n", statusReg.regVal);
+
+	return EXIT_SUCCESS;
+}

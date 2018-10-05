@@ -1,0 +1,27 @@
+#ifndef REGS_H_
+#define REGS_H_
+
+
+typedef uint32_t reg_addr_t;
+typedef struct
+{
+	uint8_t regVal;
+	reg_addr_t regAddr;
+	bool readOnly;
+} reg8_t;
+typedef struct
+{
+	uint16_t regVal;
+	reg_addr_t regAddr;
+	bool readOnly;
+} reg16_t;
+typedef struct
+{
+	uint32_t regVal;
+	reg_addr_t regAddr;
+	bool readOnly;
+} reg32_t;
+
+
+
+#endif /* REGS_H_ */

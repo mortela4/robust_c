@@ -1,0 +1,5 @@
+14:59:20 **** Clean-only build of configuration Debug for project mem_access_ex1 ****
+rm -rf src/mem_access_ex1.o mem_access_ex1.exe src/memaccess.d src/memaccess_wrapper.d src/mem_access_ex1.d src/memaccess.o src/memaccess_wrapper.o 
+
+14:59:20 Build Finished (took 220ms)
+

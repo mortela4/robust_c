@@ -1,0 +1,5 @@
+14:59:20 **** Clean-only build of configuration Debug for project reg_access_ex1 ****
+rm -rf src/reg_access_ex1.d src/reg_access_ex1.o reg_access_ex1.exe 
+
+14:59:20 Build Finished (took 183ms)
+

@@ -1,0 +1,44 @@
+#ifndef MEMACCESS_H_
+#define MEMACCESS_H_
+
+#include <stdint.h>
+#include <stdbool.h>
+
+
+#define PRINT_INFO()
+
+typedef uint32_t mem_addr_t;
+typedef struct
+{
+	uint8_t regVal;
+	mem_addr_t regAddr;
+	bool readOnly;
+} reg8_t;
+typedef struct
+{
+	uint16_t regVal;
+	mem_addr_t regAddr;
+	bool readOnly;
+} reg16_t;
+typedef struct
+{
+	uint32_t regVal;
+	mem_addr_t regAddr;
+	bool readOnly;
+} reg32_t;
+
+
+bool WriteMem8(uint8_t *val, reg8_t *reg);
+void ReadMem8(uint8_t *var, reg8_t *reg);
+void MemInfo8(reg8_t *reg);
+//
+bool WriteMem16(uint16_t *val, reg16_t *reg);
+void ReadMem16(uint16_t *var, reg16_t *reg);
+void MemInfo16(reg16_t *reg);
+//
+bool WriteMem32(uint32_t *val, reg32_t *reg);
+void ReadMem32(uint32_t *var, reg32_t *reg);
+void MemInfo32(reg32_t *reg);
+
+
+#endif /* MEMACCESS_H_ */

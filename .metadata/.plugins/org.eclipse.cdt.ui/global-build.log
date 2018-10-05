@@ -1,0 +1,36 @@
+14:59:18 **** Clean-only build of configuration Debug for project array_ex1 ****
+rm -rf src/coeffs.d src/array_ex1.o src/coeffs.o array_ex1.exe src/array_ex1.d 
+14:59:18 **** Clean-only build of configuration Debug for project array_ex2 ****
+rm -rf src/array_ex2.o array_ex2.exe src/lut_coeffs.d src/array_ex2.d src/lut_coeffs.o 
+14:59:19 **** Clean-only build of configuration Debug for project array_ex3 ****
+rm -rf array_ex3.exe src/lut_coeffs.d src/array_ex3.d src/array_ex3.o src/lut_coeffs.o 
+14:59:19 **** Clean-only build of configuration Debug for project bit_manip_ex1 ****
+rm -rf src/bit_manip_ex1.d src/bit_manip_ex1.o bit_manip_ex1.exe 
+14:59:19 **** Clean-only build of configuration Debug for project fsm_ex1 ****
+rm -rf src/fsm_ex1.o src/fsm.o src/fsm_ex1.d src/fsm.d fsm_ex1.exe 
+14:59:19 **** Clean-only build of configuration Debug for project func_alias ****
+rm -rf src/func_alias.d src/func_alias.o func_alias.exe 
+14:59:19 **** Clean-only build of configuration Debug for project global_data_ex1 ****
+rm -rf src/global_data_ex1.o global_data_ex1.exe src/global_data_ex1.d 
+14:59:20 **** Clean-only build of configuration Debug for project mem_access_ex1 ****
+rm -rf src/mem_access_ex1.o mem_access_ex1.exe src/memaccess.d src/memaccess_wrapper.d src/mem_access_ex1.d src/memaccess.o src/memaccess_wrapper.o 
+14:59:20 **** Clean-only build of configuration Debug for project reg_access_ex1 ****
+rm -rf src/reg_access_ex1.d src/reg_access_ex1.o reg_access_ex1.exe 
+14:59:20 **** Clean-only build of configuration Debug for project reg_access_ex2 ****
+rm -rf src/regs_wrapper.o src/reg_access_ex2.d src/regs.d reg_access_ex2.exe src/regs_wrapper.d src/regs.o src/reg_access_ex2.o 
+14:59:20 **** Clean-only build of configuration Debug for project type_check_ex1 ****
+rm -rf src/type_check_ex1.o type_check_ex1.exe src/type_check_ex1.d 
+14:59:21 **** Clean-only build of configuration Debug for project type_check_ex2 ****
+rm -rf src/type_check_ex2.o src/type_check_ex2.d type_check_ex2.exe 
+14:59:21 **** Clean-only build of configuration Debug for project type_check_ex3 ****
+rm -rf src/type_check_ex3.o type_check_ex3.exe src/type_check_ex3.d 
+14:59:21 **** Clean-only build of configuration Debug for project var_args_ex1 ****
+rm -rf src/var_args_ex1.o var_args_ex1.exe src/var_args_ex1.d 
+14:59:21 **** Clean-only build of configuration Debug for project var_args_ex2 ****
+rm -rf var_args_ex2.exe src/var_args_ex2.o src/var_args_ex2.d 
+14:59:21 **** Clean-only build of configuration Debug for project var_args_ex3 ****
+rm -rf src/var_args_ex3.o src/var_args_ex3.d var_args_ex3.exe 
+14:59:22 **** Clean-only build of configuration Debug for project var_args_ex4_cpp ****
+rm -rf var_args_ex4_cpp.exe src/var_args_ex4_cpp.o src/var_args_ex4_cpp.d 
+14:59:22 **** Clean-only build of configuration Debug for project var_args_ex5_cpp ****
+rm -rf src/var_args_ex5_cpp.o var_args_ex5_cpp.exe src/var_args_ex5_cpp.d 

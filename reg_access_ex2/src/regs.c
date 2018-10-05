@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+//
+#include "regs.h"
+
+
+/* Handy macros */
+#define PRINT_REG_INFO(x,y)	{ \
+								printf("Register INFO:\n"); \
+								printf("==============\n"); \
+								printf("Register address: 0x%08X\n", reg->regAddr); \
+								printf("Register is %s\n", (reg->readOnly) ? "READONLY" : "writable"); \
+								printf("Register is %d-bit register\n", x); \
+								printf("Register value: 0x%0" #y "X\n", reg->regVal); \
+							}
+// Shortcuts:
+#define PRINT_REG_INFO_8	PRINT_REG_INFO(8,2)
+#define PRINT_REG_INFO_16	PRINT_REG_INFO(16,4)
+#define PRINT_REG_INFO_32	PRINT_REG_INFO(32,8)
+
+
+/* Low-level helpers */
+bool WriteReg8(uint8_t *val, reg8_t *reg)
+{
+	bool status = true;
+
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+		status = false;
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+
+	return status;
+}
+void ReadReg8(uint8_t *var, reg8_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo8(reg8_t *reg)
+{
+	PRINT_REG_INFO_8;
+}
+
+
+bool WriteReg16(uint16_t *val, reg16_t *reg)
+{
+	bool status = true;
+
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+		status = false;
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+
+	return status;
+}
+void ReadReg16(uint16_t *var, reg16_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo16(reg16_t *reg)
+{
+	PRINT_REG_INFO_16;
+}
+
+
+bool WriteReg32(uint32_t *val, reg32_t *reg)
+{
+	bool status = true;
+
+	if (reg->readOnly)
+	{
+		printf("ERROR: register is READONLY - cannot WRITE!\n\n");
+		status = false;
+	}
+	else
+	{
+		reg->regVal = *val;
+	}
+
+	return status;
+}
+void ReadReg32(uint32_t *var, reg32_t *reg)
+{
+	*var = reg->regVal;
+}
+void RegInfo32(reg32_t *reg)
+{
+	PRINT_REG_INFO_32;
+}
+

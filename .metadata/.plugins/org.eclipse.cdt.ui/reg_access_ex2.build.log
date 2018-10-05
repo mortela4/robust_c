@@ -1,0 +1,5 @@
+14:59:20 **** Clean-only build of configuration Debug for project reg_access_ex2 ****
+rm -rf src/regs_wrapper.o src/reg_access_ex2.d src/regs.d reg_access_ex2.exe src/regs_wrapper.d src/regs.o src/reg_access_ex2.o 
+
+14:59:20 Build Finished (took 180ms)
+

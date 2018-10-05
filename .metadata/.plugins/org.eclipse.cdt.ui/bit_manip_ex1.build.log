@@ -1,0 +1,5 @@
+14:59:19 **** Clean-only build of configuration Debug for project bit_manip_ex1 ****
+rm -rf src/bit_manip_ex1.d src/bit_manip_ex1.o bit_manip_ex1.exe 
+
+14:59:19 Build Finished (took 189ms)
+

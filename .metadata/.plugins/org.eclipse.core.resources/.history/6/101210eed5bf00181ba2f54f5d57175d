@@ -1,0 +1,166 @@
+/*
+ ============================================================================
+ Name        : bit_manip_ex1.c
+ Author      : ml
+ Version     :
+ Copyright   : 
+ Description : Hello World in C, Ansi-style
+ ============================================================================
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+
+#define DS18B20_DECIMAL_STEPS_12BIT		0.0625F
+#define DS18B20_DECIMAL_STEPS_11BIT		0.125F
+#define DS18B20_DECIMAL_STEPS_10BIT		0.25F
+#define DS18B20_DECIMAL_STEPS_9BIT		0.5F
+
+#ifdef VERIFICATION_BUILD
+#define DEVIATION_MAX	0.1F
+#endif
+
+
+/* Protos */
+float calculate_ds18b20_temp(const uint8_t data[8]);
+float calculate_ds18b20_temp_alt(const uint8_t data[8]);
+
+
+/* Implementations */
+
+float calculate_ds18b20_temp(const uint8_t data[8])
+{
+	bool type_s = false;								// STUB this - to toggle between TRUE/FALSE! ('type_s' = true --> DS18S20??)
+	int16_t high = data[1] & 0x00ff;                    // Enklere: high = *(int16_t *)data; // Forutsetter at array er word(32-bit)-aligned! (else, HardFault ...)
+	int16_t raw = (int16_t)(high << 8) | data[0];
+
+	if (type_s)
+	{
+		raw = raw << 3; // 9 bit resolution default
+		if (data[7] == 0x10)
+		{
+			// "count remain" gives full 12 bit resolution
+			raw = (int16_t)((raw & 0xFFF0) + 12 - data[6]);     // Mixed-sign arithmetics = bad ...
+		}
+	}
+	else
+	{
+		uint8_t cfg = (data[4] & 0x60);
+		// at lower res, the low bits are undefined, so let's zero them
+		if (cfg == 0x00)
+			 raw = raw & ~7;  // 9 bit resolution, 93.75 ms
+		else if (cfg == 0x20)
+			 raw = raw & ~3; // 10 bit res, 187.5 ms
+		else if (cfg == 0x40)
+			raw = raw & ~1; // 11 bit res, 375 ms
+		//// default is 12 bit resolution, 750 ms conversion time   <-- så ... hvorfor er ikke dette i egen ELSE-clause her??
+	}
+	float celsius = (float)(((float)raw) / 16.0);
+
+	return celsius;
+}
+
+
+float calculate_ds18b20_temp_alt(const uint8_t data[8])
+{
+	uint16_t temperature;
+	uint8_t resolution;
+	int8_t digit, minus = 0;
+	float decimal = 0.0F;
+
+	/* First two bytes of scratchpad are temperature values */
+	//temperature = data[0] | (data[1] << 8);
+	temperature = *(uint16_t *)data;           // NB: enklere - men, ikke portabel: forutsetter LittleEndian byte-ordering!
+
+	/* Check if temperature is negative */
+	if (temperature & 0x8000)
+	{
+		/* Two's complement, temperature is negative */
+		temperature = ~temperature + 1;
+		minus = 1;										// NB: notêr hvordan fortegn ivaretas her!
+	}
+
+
+	/* Get sensor resolution */
+	resolution = ((data[4] & 0x60) >> 5) + 9;
+
+
+	/* Store temperature integer digits and decimal digits */
+	digit = temperature >> 4;
+	digit |= ((temperature >> 8) & 0x7) << 4;
+
+	/* Store decimal digits */
+	switch (resolution)
+	{
+		case 9:
+			decimal = (temperature >> 3) & 0x01;
+			decimal *= DS18B20_DECIMAL_STEPS_9BIT;
+		break;
+		case 10:
+			decimal = (temperature >> 2) & 0x03;
+			decimal *= DS18B20_DECIMAL_STEPS_10BIT;
+		 break;
+		case 11:
+			decimal = (temperature >> 1) & 0x07;
+			decimal *= DS18B20_DECIMAL_STEPS_11BIT;
+		break;
+		case 12:
+			decimal = temperature & 0x0F;
+			decimal *= DS18B20_DECIMAL_STEPS_12BIT;
+		 break;
+		default:
+			decimal = 0xFF;
+			digit = 0;
+	}
+
+	/* Check for negative part */
+	decimal = digit + decimal;
+	if (minus)
+		decimal = 0 - decimal;
+
+	return decimal;
+}
+
+/************************************ TESTING ********************************/
+
+/*
+Examples for data[1:0]
+======================
+07D0 hex = +125C
+0191 hex = +25.0625C
+0008 hex = +0.5C
+0000 hex = 0C
+FFF8 hex = -0.5C
+FE6F hex = -25.0625C
+ */
+int main(void)
+{
+	// Tilsv. +125degC:
+	const uint8_t tstData1_A[8] = {0xD0, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10}; // using 9-bit resolution and don't care about CRC
+	const uint8_t tstData1_B[8] = {0xD0, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; // using 9-bit resolution and don't care about CRC
+	// Tilsv. ca. -25degC:
+	const uint8_t tstData2_A[8] = {0x6F, 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10}; // using 9-bit resolution and don't care about CRC
+	const uint8_t tstData2_B[8] = {0x6F, 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; // using 9-bit resolution and don't care about CRC
+
+	float tst = calculate_ds18b20_temp(tstData1_A);
+	float tst_alt = calculate_ds18b20_temp_alt(tstData1_A);
+	printf("temp = %.4f and temp_alt = %.4f\n", tst, tst_alt);
+
+	tst = calculate_ds18b20_temp(tstData1_B);
+	tst_alt = calculate_ds18b20_temp_alt(tstData1_B);
+	printf("temp = %.4f and temp_alt = %.4f\n", tst, tst_alt);
+
+	tst = calculate_ds18b20_temp(tstData2_A);
+	tst_alt = calculate_ds18b20_temp_alt(tstData2_A);
+	printf("temp = %.4f and temp_alt = %.4f\n", tst, tst_alt);
+
+	tst = calculate_ds18b20_temp(tstData2_B);
+	tst_alt = calculate_ds18b20_temp_alt(tstData2_B);
+	printf("temp = %.4f and temp_alt = %.4f\n", tst, tst_alt);
+
+
+	return EXIT_SUCCESS;
+}

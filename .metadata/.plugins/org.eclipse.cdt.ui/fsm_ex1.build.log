@@ -1,0 +1,5 @@
+14:59:19 **** Clean-only build of configuration Debug for project fsm_ex1 ****
+rm -rf src/fsm_ex1.o src/fsm.o src/fsm_ex1.d src/fsm.d fsm_ex1.exe 
+
+14:59:19 Build Finished (took 185ms)
+

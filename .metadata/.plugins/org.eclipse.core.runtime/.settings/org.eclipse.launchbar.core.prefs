@@ -1,0 +1,10 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:global_data_ex1.exe,org.eclipse.launchbar.core.descriptorType.default\:type_check_ex1.exe,org.eclipse.launchbar.core.descriptorType.default\:type_check_ex2.exe,org.eclipse.launchbar.core.descriptorType.default\:type_check_ex3.exe,org.eclipse.launchbar.core.descriptorType.default\:array_ex1.exe,org.eclipse.launchbar.core.descriptorType.default\:fsm_ex1.exe,org.eclipse.launchbar.core.descriptorType.default\:array_ex2.exe,org.eclipse.launchbar.core.descriptorType.default\:array_ex3.exe,org.eclipse.launchbar.core.descriptorType.default\:func_alias.exe,org.eclipse.launchbar.core.descriptorType.default\:var_args_ex1.exe,org.eclipse.launchbar.core.descriptorType.default\:var_args_ex2.exe,org.eclipse.launchbar.core.descriptorType.default\:var_args_ex3.exe,org.eclipse.launchbar.core.descriptorType.default\:var_args_ex4_cpp.exe,org.eclipse.launchbar.core.descriptorType.default\:var_args_ex5_cpp.exe,org.eclipse.launchbar.core.descriptorType.default\:reg_access_ex1.exe,org.eclipse.launchbar.core.descriptorType.default\:bit_manip_ex1.exe,org.eclipse.launchbar.core.descriptorType.default\:reg_access_ex2.exe,org.eclipse.launchbar.core.descriptorType.default\:mem_access_ex1.exe
+eclipse.preferences.version=1
+org.eclipse.launchbar.core.descriptorType.default\:array_ex1.exe/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:array_ex1.exe/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:array_ex2.exe/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:global_data_ex1.exe/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:global_data_ex1.exe/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
